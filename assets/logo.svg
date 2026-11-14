@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 120" width="700" height="120" role="img" aria-label="mpv-audio-freedom">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 120" width="580" height="120" role="img" aria-label="mpv-anyaudio">
   <style>
     /* Fixed palette on its own panel: prefers-color-scheme follows the viewer's OS, not the page theme. */
     .fg { fill: #e6edf3; } .video { fill: #3fb950; } .audio { fill: #a371f7; }
     text { font: 700 52px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
   </style>
-  <rect width="700" height="120" rx="16" fill="#0d1117"/>
+  <rect width="580" height="120" rx="16" fill="#0d1117"/>
   <!-- play triangle (the picture) followed by level bars (the sound) -->
   <path class="video" d="M22 22 L22 98 Q22 104 28 101 L84 65 Q90 60 84 55 L28 19 Q22 16 22 22 Z"/>
   <rect class="audio" x="100" y="44" width="12" height="32" rx="6"/>
   <rect class="audio" x="120" y="24" width="12" height="72" rx="6"/>
   <rect class="audio" x="140" y="36" width="12" height="48" rx="6"/>
-  <text x="176" y="78"><tspan class="fg">mpv-</tspan><tspan class="audio">audio</tspan><tspan class="fg">-freedom</tspan></text>
+  <text x="176" y="78"><tspan class="fg">mpv-</tspan><tspan class="audio">any</tspan><tspan class="fg">audio</tspan></text>
 </svg>

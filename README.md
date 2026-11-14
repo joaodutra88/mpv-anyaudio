@@ -1,10 +1,10 @@
-<p align="center"><img src="assets/logo.svg" alt="mpv-audio-freedom" width="460"></p>
+<p align="center"><img src="assets/logo.svg" alt="mpv-anyaudio" width="420"></p>
 
 <p align="center"><b>Any audio on any video.</b> Watch the picture of one source with the sound of another.</p>
 
 <p align="center">
-  <a href="https://github.com/joaodutra88/mpv-audio-freedom/releases/latest"><img src="https://img.shields.io/github/v/release/joaodutra88/mpv-audio-freedom" alt="Latest release"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/joaodutra88/mpv-audio-freedom" alt="MIT license"></a>
+  <a href="https://github.com/joaodutra88/mpv-anyaudio/releases/latest"><img src="https://img.shields.io/github/v/release/joaodutra88/mpv-anyaudio" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/joaodutra88/mpv-anyaudio" alt="MIT license"></a>
 </p>
 
 <p align="center"><a href="assets/demo.mp4"><img src="assets/demo.webp" alt="Press F6 on the source with the audio you want, then F7 on the source with the picture you want" width="860"></a></p>

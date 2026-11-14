@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/logo.svg" alt="mpv-audio-freedom" width="460"></p>
+<p align="center"><img src="assets/logo.svg" alt="mpv-anyaudio" width="420"></p>
 
 <p align="center"><b>Qualquer áudio em qualquer vídeo.</b> Assista à imagem de uma fonte com o som de outra.</p>
 

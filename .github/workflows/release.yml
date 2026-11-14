@@ -24,7 +24,7 @@ jobs:
       - name: Package
         shell: pwsh
         run: |
-          $out = "mpv-audio-freedom-$env:GITHUB_REF_NAME"
+          $out = "mpv-anyaudio-$env:GITHUB_REF_NAME"
           New-Item -ItemType Directory "$out/nuvio", "$out/extras" | Out-Null
           Copy-Item anyaudio.lua, README.md, README.pt-BR.md, LICENSE $out
           Copy-Item extras/README.md "$out/extras"
@@ -35,4 +35,4 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create $env:GITHUB_REF_NAME "mpv-audio-freedom-$env:GITHUB_REF_NAME.zip" --generate-notes
+        run: gh release create $env:GITHUB_REF_NAME "mpv-anyaudio-$env:GITHUB_REF_NAME.zip" --generate-notes
