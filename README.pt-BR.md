@@ -2,7 +2,7 @@
 
 <p align="center"><b>Qualquer áudio em qualquer vídeo.</b> Assista à imagem de uma fonte com o som de outra.</p>
 
-<p align="center"><img src="assets/demo.svg" alt="Aperte F6 na fonte com o áudio que você quer e depois F7 na fonte com a imagem que você quer"></p>
+<p align="center"><a href="assets/demo.mp4"><img src="assets/demo.webp" alt="Aperte F6 na fonte com o áudio que você quer e depois F7 na fonte com a imagem que você quer" width="860"></a></p>
 
 A versão mais bonita de um filme muitas vezes não é a que tem o áudio que você quer: o
 arquivo 4K só tem o idioma original, e a dublagem está num arquivo 1080p. O `anyaudio` é
@@ -104,7 +104,6 @@ Precisa do `ffmpeg` no PATH.
 
 ## Roadmap
 
-- Zip de release com o shim do Nuvio já compilado
 - README em mais idiomas
 - Lembrar qual fonte de áudio combina com qual série
 - Suporte ao Nuvio no Linux e no macOS

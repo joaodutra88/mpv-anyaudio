@@ -7,7 +7,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/joaodutra88/mpv-audio-freedom" alt="MIT license"></a>
 </p>
 
-<p align="center"><img src="assets/demo.svg" alt="Press F6 on the source with the audio you want, then F7 on the source with the picture you want"></p>
+<p align="center"><a href="assets/demo.mp4"><img src="assets/demo.webp" alt="Press F6 on the source with the audio you want, then F7 on the source with the picture you want" width="860"></a></p>
 
 The best-looking release of a film is often not the one with the audio you want: the 4K
 file has only the original language, and the dub lives in a 1080p file. `anyaudio` is a
@@ -106,7 +106,6 @@ Runs grab / apply / clear inside a headless libmpv started with `config=no`. Nee
 
 ## Roadmap
 
-- Release zip with the prebuilt Nuvio shim
 - README in more languages
 - Remember which audio source goes with which series
 - Linux and macOS support for Nuvio
