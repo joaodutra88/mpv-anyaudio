@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 330" width="860" height="330" role="img"
+     aria-label="Press F6 on the source with the audio you want, then F7 on the source with the picture you want: its audio is replaced.">
+  <style>
+    /* Fixed palette on its own panel: prefers-color-scheme follows the viewer's OS, not the page theme. */
+    svg { --fg: #e6edf3; --muted: #8b949e; --border: #30363d; --surface: #161b22; --video: #3fb950; --audio: #a371f7; --on: #0d1117; }
+    text { font: 600 16px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--fg); }
+    .title { font-size: 15px; fill: var(--muted); }
+    .card { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+    .pill { fill: none; stroke: var(--border); stroke-width: 1.5; }
+    .pill-video { fill: var(--video); } .pill-audio { fill: var(--audio); }
+    .on { fill: var(--on); }
+    .key { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+    .caption { font-size: 18px; text-anchor: middle; opacity: 0; }
+
+    /* one 10s loop: F6 at 1s, F7 at 4s, result held from 6s */
+    .anim { animation-duration: 10s; animation-iteration-count: infinite; animation-timing-function: ease-in-out; }
+    #k6 { animation-name: k6; }       @keyframes k6 { 0%, 9%, 20%, 100% { fill: var(--surface); } 11%, 17% { fill: var(--audio); } }
+    #k7 { animation-name: k7; }       @keyframes k7 { 0%, 39%, 50%, 100% { fill: var(--surface); } 41%, 47% { fill: var(--audio); } }
+    #saved { animation-name: saved; } @keyframes saved { 0%, 11% { opacity: 0; } 15%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    #fly { animation-name: fly; }     @keyframes fly { 0%, 41% { transform: translateX(0); opacity: 0; } 43% { transform: translateX(0); opacity: 1; } 57%, 94% { transform: translateX(500px); opacity: 1; } 100% { transform: translateX(500px); opacity: 0; } }
+    #own { animation-name: own; }     @keyframes own { 0%, 50% { opacity: 1; } 57%, 94% { opacity: 0; } 100% { opacity: 1; } }
+    #glow { animation-name: glow; }   @keyframes glow { 0%, 57% { stroke: var(--border); } 62%, 94% { stroke: var(--audio); } 100% { stroke: var(--border); } }
+    #c1 { animation-name: c1; }       @keyframes c1 { 0%, 2% { opacity: 0; } 6%, 34% { opacity: 1; } 38%, 100% { opacity: 0; } }
+    #c2 { animation-name: c2; }       @keyframes c2 { 0%, 38% { opacity: 0; } 42%, 58% { opacity: 1; } 62%, 100% { opacity: 0; } }
+    #c3 { animation-name: c3; }       @keyframes c3 { 0%, 62% { opacity: 0; } 66%, 94% { opacity: 1; } 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none; }
+      #fly { transform: translateX(500px); opacity: 1; } #own { opacity: 0; } #saved, #c3 { opacity: 1; } #glow { stroke: var(--audio); }
+    }
+  </style>
+
+  <rect width="860" height="330" rx="16" fill="#0d1117"/>
+
+  <!-- source A: the audio you want -->
+  <rect class="card" x="30" y="30" width="300" height="200" rx="14"/>
+  <text class="title" x="50" y="62">Source A</text>
+  <rect class="pill" x="50" y="80" width="260" height="40" rx="20"/>
+  <text x="70" y="106">1080p picture</text>
+  <rect class="pill-audio" x="50" y="140" width="260" height="40" rx="20"/>
+  <text class="on" x="70" y="166">Dubbed audio</text>
+  <text id="saved" class="anim title" x="50" y="212" style="fill: var(--audio)">saved with F6</text>
+
+  <!-- source B: the picture you want -->
+  <rect id="glow" class="card anim" x="530" y="30" width="300" height="200" rx="14"/>
+  <text class="title" x="550" y="62">Source B</text>
+  <rect class="pill-video" x="550" y="80" width="260" height="40" rx="20"/>
+  <text class="on" x="570" y="106">4K picture</text>
+  <g id="own" class="anim">
+    <rect class="pill" x="550" y="140" width="260" height="40" rx="20"/>
+    <text x="570" y="166">Original audio</text>
+  </g>
+
+  <!-- the dubbed audio travelling from A into B -->
+  <g id="fly" class="anim">
+    <rect class="pill-audio" x="50" y="140" width="260" height="40" rx="20"/>
+    <text class="on" x="70" y="166">Dubbed audio</text>
+  </g>
+
+  <!-- keys -->
+  <rect id="k6" class="key anim" x="394" y="72" width="72" height="48" rx="10"/>
+  <text x="430" y="102" text-anchor="middle">F6</text>
+  <text class="title" x="430" y="140" text-anchor="middle">grab</text>
+  <rect id="k7" class="key anim" x="394" y="158" width="72" height="48" rx="10"/>
+  <text x="430" y="188" text-anchor="middle">F7</text>
+  <text class="title" x="430" y="226" text-anchor="middle">apply</text>
+
+  <text id="c1" class="caption anim" x="430" y="290">Press F6 on the source with the audio you want</text>
+  <text id="c2" class="caption anim" x="430" y="290">Press F7 on the source with the picture you want</text>
+  <text id="c3" class="caption anim" x="430" y="290">4K picture, dubbed audio, in sync</text>
+</svg>

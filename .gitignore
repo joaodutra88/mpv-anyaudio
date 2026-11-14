@@ -1,0 +1,10 @@
+# build output of nuvio/make.cmd
+nuvio/libmpv-2.dll
+nuvio/libmpv-2.lib
+nuvio/libmpv-2.exp
+*.obj
+
+# created by nuvio/install.ps1 on the user's machine
+nuvio/real/
+nuvio/nuvio-mpv.conf
+nuvio/shim.log

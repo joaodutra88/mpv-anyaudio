@@ -1,0 +1,38 @@
+name: release
+
+# Pushing a tag like v0.1.0 builds the Nuvio shim and publishes a release zip.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the Nuvio shim
+        shell: cmd
+        run: |
+          for /f "usebackq delims=" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath`) do set VS=%%i
+          call "%VS%\VC\Auxiliary\Build\vcvars64.bat" || exit /b 1
+          call nuvio\make.cmd || exit /b 1
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $out = "mpv-audio-freedom-$env:GITHUB_REF_NAME"
+          New-Item -ItemType Directory "$out/nuvio", "$out/extras" | Out-Null
+          Copy-Item anyaudio.lua, README.md, README.pt-BR.md, LICENSE $out
+          Copy-Item extras/README.md "$out/extras"
+          Copy-Item nuvio/libmpv-2.dll, nuvio/install.ps1, nuvio/uninstall.ps1, nuvio/input.conf "$out/nuvio"
+          Compress-Archive -Path $out -DestinationPath "$out.zip"
+
+      - name: Publish
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create $env:GITHUB_REF_NAME "mpv-audio-freedom-$env:GITHUB_REF_NAME.zip" --generate-notes
