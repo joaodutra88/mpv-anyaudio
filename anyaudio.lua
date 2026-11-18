@@ -77,27 +77,33 @@ local function on_disk(path)
     return not path:find("^%a[%w+.-]+:") -- http:, edl:...; a drive letter is a single char
 end
 
+local windows = package.config:sub(1, 1) == "\\"
+
 local function quote(s)
-    -- shortcut: double quotes break in PowerShell on names with $ or `, rare in media files
-    if package.config:sub(1, 1) == "\\" then return '"' .. s .. '"' end
+    if windows then return '"' .. s .. '"' end
     return "'" .. s:gsub("'", "'\\''") .. "'"
 end
 
 local function mkvmerge()
-    if not applied then return say("nothing applied: use apply first") end
     local video = mp.get_property("path")
+    if not (applied and video) then return say("nothing applied: use apply first") end
     if not (on_disk(video) and on_disk(applied)) then
         return say("mkvmerge needs both sources as files on disk", 6)
     end
     local cwd = mp.get_property("working-directory")
     local audio = utils.join_path(cwd, applied)
     video = utils.join_path(cwd, video)
+    -- pasted into PowerShell, double quotes run $(...), escape with ` and also end at curly quotes
+    if windows and ((video .. audio):find("[$`]") or (video .. audio):find("\226\128[\156-\158]")) then
+        return say("rename the file or folder: $, ` or curly quotes in its path are not safe to paste into PowerShell", 8)
+    end
 
-    -- mpv's ff-index is the stream order, which is mkvmerge's track ID in mkv and mp4.
+    -- shortcut: takes mpv's ff-index as mkvmerge's track ID (same in mkv, mp4, avi and ts); a stream mkvmerge
+    -- skips would shift it, then match the tracks through `mkvmerge -J` instead.
     -- The dub becomes the only default audio, so the file plays like this session did.
     local dub, own = nil, {}
     for _, t in ipairs(mp.get_property_native("track-list", {})) do
-        if t.type == "audio" and not t.external then own[#own + 1] = "--default-track-flag " .. t["ff-index"] .. ":0 " end
+        if t.type == "audio" and not t.external then own[#own + 1] = "--default-track " .. t["ff-index"] .. ":0 " end
         if t.type == "audio" and t["external-filename"] == applied and (t.selected or not dub) then dub = t end
     end
     if not dub then return say("the added audio is gone: apply it again") end
@@ -105,7 +111,7 @@ local function mkvmerge()
     local id = dub["ff-index"]
     -- mpv and mkvmerge share the sign: positive delays the audio
     local ms = math.floor(mp.get_property_number("audio-delay", 0) * 1000 + 0.5)
-    local command = ("mkvmerge -o %s %s%s -D -S -M --no-chapters --no-global-tags -a %d --sync %d:%d --default-track-flag %d:1 %s")
+    local command = ("mkvmerge -o %s %s%s -D -S -M --no-chapters --no-global-tags -a %d --sync %d:%d --default-track %d:1 %s")
         :format(quote(video:gsub("%.[^.\\/]*$", "") .. ".anyaudio.mkv"), table.concat(own), quote(video), id, id, ms, id, quote(audio))
     mp.msg.info(command)
     if mp.set_property("clipboard/text", command) then
