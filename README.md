@@ -74,6 +74,15 @@ Read before installing:
 `nuvio\nuvio-mpv.conf` takes any mpv option (`name=value`, one per line), so it is also
 the way to get your own mpv settings into Nuvio. `nuvio\input.conf` takes key bindings.
 
+### Updating
+
+New versions come out as [releases](https://github.com/joaodutra88/mpv-anyaudio/releases).
+To be notified, use **Watch → Custom → Releases** at the top of this page.
+
+- mpv and Stremio: replace `anyaudio.lua` with the one from the new release.
+- Nuvio: close Nuvio, copy the files of the new release over your current folder (your
+  `nuvio\nuvio-mpv.conf` is kept), then run `nuvio\install.ps1` again.
+
 ## Limits
 
 - **Same cut.** Both sources must be the same version of the film or episode. A fixed
@@ -83,6 +92,23 @@ the way to get your own mpv settings into Nuvio. `nuvio\input.conf` takes key bi
 - **Per file.** The added audio belongs to the file being played: press `F7` again on
   the next episode, after `F6` on its matching source.
 - **Expiring links.** A grabbed streaming link can expire before you apply it.
+
+## anyaudio, `--audio-file` or mkvmerge?
+
+All three put the audio of one source on the video of another. Pick by where your
+sources are:
+
+| | anyaudio | mpv `--audio-file` | mkvmerge / MKVToolNix |
+|---|---|---|---|
+| Sources | whatever the player is playing, streams included | paths or URLs you type | files on your disk |
+| Inside Stremio / Nuvio | yes | no | no |
+| Download or remux first | no | no | yes, both files in full |
+| Result | this playback | this playback | a new file that plays anywhere |
+
+anyaudio does what `--audio-file` does (mpv's `audio-add` command); what it adds is
+picking the source from inside the player, where the stream's address is usually hidden.
+If both files are on your disk and you want to keep the result, mkvmerge is the better
+tool: no extra bandwidth and nothing to set up the next time you watch.
 
 ## Privacy
 
@@ -109,6 +135,8 @@ Runs grab / apply / clear inside a headless libmpv started with `config=no`. Nee
 - README in more languages
 - Remember which audio source goes with which series
 - Linux and macOS support for Nuvio
+- A key that prints the ready `mkvmerge` command for a setup that works
+  ([#1](https://github.com/joaodutra88/mpv-anyaudio/issues/1))
 
 ## Contributing
 

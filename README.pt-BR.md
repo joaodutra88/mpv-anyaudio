@@ -2,6 +2,11 @@
 
 <p align="center"><b>Qualquer áudio em qualquer vídeo.</b> Assista à imagem de uma fonte com o som de outra.</p>
 
+<p align="center">
+  <a href="https://github.com/joaodutra88/mpv-anyaudio/releases/latest"><img src="https://img.shields.io/github/v/release/joaodutra88/mpv-anyaudio" alt="Última release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/joaodutra88/mpv-anyaudio" alt="Licença MIT"></a>
+</p>
+
 <p align="center"><a href="assets/demo.mp4"><img src="assets/demo.webp" alt="Aperte F6 na fonte com o áudio que você quer e depois F7 na fonte com a imagem que você quer" width="860"></a></p>
 
 A versão mais bonita de um filme muitas vezes não é a que tem o áudio que você quer: o
@@ -71,6 +76,15 @@ O `nuvio\nuvio-mpv.conf` aceita qualquer opção do mpv (`nome=valor`, uma por l
 então também é o caminho para levar as suas configurações de mpv para o Nuvio. O
 `nuvio\input.conf` aceita atalhos de teclado.
 
+### Atualizando
+
+Versões novas saem como [releases](https://github.com/joaodutra88/mpv-anyaudio/releases).
+Para ser avisado, use **Watch → Custom → Releases** no topo desta página.
+
+- mpv e Stremio: troque o `anyaudio.lua` pelo da release nova.
+- Nuvio: feche o Nuvio, copie os arquivos da release nova por cima da sua pasta atual (o
+  seu `nuvio\nuvio-mpv.conf` é mantido) e rode o `nuvio\install.ps1` de novo.
+
 ## Limites
 
 - **Mesmo corte.** As duas fontes precisam ser a mesma versão do filme ou episódio. Um
@@ -81,6 +95,23 @@ então também é o caminho para levar as suas configurações de mpv para o Nuv
 - **Por arquivo.** O áudio adicionado pertence ao arquivo em reprodução: aperte `F7` de
   novo no próximo episódio, depois do `F6` na fonte correspondente.
 - **Links que expiram.** Um link de streaming guardado pode expirar antes de ser aplicado.
+
+## anyaudio, `--audio-file` ou mkvmerge?
+
+Os três colocam o áudio de uma fonte no vídeo de outra. Escolha pelo lugar onde estão as
+suas fontes:
+
+| | anyaudio | `--audio-file` do mpv | mkvmerge / MKVToolNix |
+|---|---|---|---|
+| Fontes | o que o player estiver tocando, streams incluídos | caminhos ou URLs que você digita | arquivos no seu disco |
+| Dentro do Stremio / Nuvio | sim | não | não |
+| Baixar ou remuxar antes | não | não | sim, os dois arquivos inteiros |
+| Resultado | esta reprodução | esta reprodução | um arquivo novo que toca em qualquer player |
+
+O anyaudio faz o mesmo que o `--audio-file` (o comando `audio-add` do mpv); o que ele
+acrescenta é escolher a fonte de dentro do player, onde o endereço do stream normalmente
+fica escondido. Se os dois arquivos estão no seu disco e você quer guardar o resultado, o
+mkvmerge é a ferramenta melhor: sem banda extra e nada para preparar na próxima vez.
 
 ## Privacidade
 
@@ -107,6 +138,8 @@ Precisa do `ffmpeg` no PATH.
 - README em mais idiomas
 - Lembrar qual fonte de áudio combina com qual série
 - Suporte ao Nuvio no Linux e no macOS
+- Uma tecla que mostra o comando `mkvmerge` pronto para uma combinação que deu certo
+  ([#1](https://github.com/joaodutra88/mpv-anyaudio/issues/1))
 
 ## Contribuindo
 
