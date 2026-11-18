@@ -2,8 +2,10 @@
 -- grab  (F6): on the source whose audio you want, remember its URL
 -- apply (F7): on the source whose video you want, add that audio and select it
 -- clear (F8): drop the added tracks and go back to the source's own audio
+-- mkvmerge (Ctrl+F7): copy the mkvmerge command that makes the current result a file
 
 local options = require "mp.options"
+local utils = require "mp.utils"
 
 local o = {
     -- A file, not a variable: some hosts (Nuvio) create a fresh mpv for every playback.
@@ -71,8 +73,51 @@ local function clear()
     say("back to this source's own audio")
 end
 
+local function on_disk(path)
+    return not path:find("^%a[%w+.-]+:") -- http:, edl:...; a drive letter is a single char
+end
+
+local function quote(s)
+    -- shortcut: double quotes break in PowerShell on names with $ or `, rare in media files
+    if package.config:sub(1, 1) == "\\" then return '"' .. s .. '"' end
+    return "'" .. s:gsub("'", "'\\''") .. "'"
+end
+
+local function mkvmerge()
+    if not applied then return say("nothing applied: use apply first") end
+    local video = mp.get_property("path")
+    if not (on_disk(video) and on_disk(applied)) then
+        return say("mkvmerge needs both sources as files on disk", 6)
+    end
+    local cwd = mp.get_property("working-directory")
+    local audio = utils.join_path(cwd, applied)
+    video = utils.join_path(cwd, video)
+
+    -- mpv's ff-index is the stream order, which is mkvmerge's track ID in mkv and mp4.
+    -- The dub becomes the only default audio, so the file plays like this session did.
+    local dub, own = nil, {}
+    for _, t in ipairs(mp.get_property_native("track-list", {})) do
+        if t.type == "audio" and not t.external then own[#own + 1] = "--default-track-flag " .. t["ff-index"] .. ":0 " end
+        if t.type == "audio" and t["external-filename"] == applied and (t.selected or not dub) then dub = t end
+    end
+    if not dub then return say("the added audio is gone: apply it again") end
+
+    local id = dub["ff-index"]
+    -- mpv and mkvmerge share the sign: positive delays the audio
+    local ms = math.floor(mp.get_property_number("audio-delay", 0) * 1000 + 0.5)
+    local command = ("mkvmerge -o %s %s%s -D -S -M --no-chapters --no-global-tags -a %d --sync %d:%d --default-track-flag %d:1 %s")
+        :format(quote(video:gsub("%.[^.\\/]*$", "") .. ".anyaudio.mkv"), table.concat(own), quote(video), id, id, ms, id, quote(audio))
+    mp.msg.info(command)
+    if mp.set_property("clipboard/text", command) then
+        say("mkvmerge command copied to the clipboard")
+    else
+        say("mkvmerge command written to the terminal / log", 6)
+    end
+end
+
 mp.register_event("start-file", function() applied = nil end)
 
 mp.add_key_binding("F6", "grab", grab)
 mp.add_key_binding("F7", "apply", apply)
 mp.add_key_binding("F8", "clear", clear)
+mp.add_key_binding("Ctrl+F7", "mkvmerge", mkvmerge)
