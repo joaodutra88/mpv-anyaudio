@@ -23,6 +23,7 @@ em sincronia, sem baixar nem remuxar nada antes.
 | `F6` | **grab**: guarda esta fonte | com a fonte do áudio que você quer tocando |
 | `F7` | **apply**: adiciona aquele áudio aqui e troca para ele | com a fonte do vídeo que você quer tocando |
 | `F8` | **clear**: volta ao áudio da própria fonte | a qualquer momento depois do `F7` |
+| `Ctrl+F7` | **mkvmerge**: copia o comando que salva este resultado num arquivo | depois do `F7`, com as duas fontes em arquivos no seu disco |
 
 O resultado de cada tecla aparece na tela (`anyaudio: ...`), em inglês.
 
@@ -112,6 +113,9 @@ O anyaudio faz o mesmo que o `--audio-file` (o comando `audio-add` do mpv); o qu
 acrescenta é escolher a fonte de dentro do player, onde o endereço do stream normalmente
 fica escondido. Se os dois arquivos estão no seu disco e você quer guardar o resultado, o
 mkvmerge é a ferramenta melhor: sem banda extra e nada para preparar na próxima vez.
+Quando um par tocar bem, o `Ctrl+F7` copia o comando `mkvmerge` pronto para a área de
+transferência: a dublagem, com o seu atraso de áudio, vira a faixa padrão do
+`<nome do vídeo>.anyaudio.mkv`, ao lado do vídeo.
 
 ## Privacidade
 
@@ -130,16 +134,15 @@ upscaling com Anime4K, com crédito aos autores.
 python tests/test_anyaudio.py <caminho da libmpv-2.dll ou libmpv.so>
 ```
 
-Executa grab / apply / clear dentro de uma libmpv sem janela, iniciada com `config=no`.
-Precisa do `ffmpeg` no PATH.
+Executa grab / apply / mkvmerge / clear dentro de uma libmpv sem janela, iniciada com
+`config=no`. Precisa do `ffmpeg` no PATH. Com o `mkvmerge` no PATH, também roda o comando
+gerado e confere o arquivo que ele cria.
 
 ## Roadmap
 
 - README em mais idiomas
 - Lembrar qual fonte de áudio combina com qual série
 - Suporte ao Nuvio no Linux e no macOS
-- Uma tecla que mostra o comando `mkvmerge` pronto para uma combinação que deu certo
-  ([#1](https://github.com/joaodutra88/mpv-anyaudio/issues/1))
 
 ## Contribuindo
 

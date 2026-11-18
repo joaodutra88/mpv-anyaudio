@@ -23,6 +23,7 @@ in sync, without downloading or remuxing anything first.
 | `F6` | **grab**: remember this source | while the source with the audio you want is playing |
 | `F7` | **apply**: add that audio here and switch to it | while the source with the video you want is playing |
 | `F8` | **clear**: back to this source's own audio | any time after `F7` |
+| `Ctrl+F7` | **mkvmerge**: copy the command that saves this result as a file | after `F7`, when both sources are files on your disk |
 
 The result of each key is shown on screen (`anyaudio: ...`).
 
@@ -108,7 +109,9 @@ sources are:
 anyaudio does what `--audio-file` does (mpv's `audio-add` command); what it adds is
 picking the source from inside the player, where the stream's address is usually hidden.
 If both files are on your disk and you want to keep the result, mkvmerge is the better
-tool: no extra bandwidth and nothing to set up the next time you watch.
+tool: no extra bandwidth and nothing to set up the next time you watch. Once a pair plays
+well, `Ctrl+F7` copies the ready `mkvmerge` command to the clipboard: the dub, with your
+audio delay, becomes the default track of `<video name>.anyaudio.mkv`, next to the video.
 
 ## Privacy
 
@@ -127,16 +130,15 @@ Anime4K upscaling, with credit to their authors.
 python tests/test_anyaudio.py <path to libmpv-2.dll or libmpv.so>
 ```
 
-Runs grab / apply / clear inside a headless libmpv started with `config=no`. Needs
-`ffmpeg` on PATH.
+Runs grab / apply / mkvmerge / clear inside a headless libmpv started with `config=no`.
+Needs `ffmpeg` on PATH. With `mkvmerge` on PATH it also runs the generated command and
+checks the file it makes.
 
 ## Roadmap
 
 - README in more languages
 - Remember which audio source goes with which series
 - Linux and macOS support for Nuvio
-- A key that prints the ready `mkvmerge` command for a setup that works
-  ([#1](https://github.com/joaodutra88/mpv-anyaudio/issues/1))
 
 ## Contributing
 
