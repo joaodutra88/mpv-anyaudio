@@ -23,7 +23,7 @@ in sync, without downloading or remuxing anything first.
 | `F6` | **grab**: remember this source | while the source with the audio you want is playing |
 | `F7` | **apply**: add that audio here and switch to it | while the source with the video you want is playing |
 | `F8` | **clear**: back to this source's own audio | any time after `F7` |
-| `Ctrl+F7` | **mkvmerge**: copy the command that saves this result as a file | after `F7`, when both sources are files on your disk |
+| `Ctrl+F7` | **mkvmerge**: copy the command that saves this result as a file | in mpv, after `F7`, when both sources are files on your disk |
 
 The result of each key is shown on screen (`anyaudio: ...`).
 
@@ -81,8 +81,9 @@ New versions come out as [releases](https://github.com/joaodutra88/mpv-anyaudio/
 To be notified, use **Watch → Custom → Releases** at the top of this page.
 
 - mpv and Stremio: replace `anyaudio.lua` with the one from the new release.
-- Nuvio: close Nuvio, copy the files of the new release over your current folder (your
-  `nuvio\nuvio-mpv.conf` is kept), then run `nuvio\install.ps1` again.
+- Nuvio: close Nuvio, copy the files of the new release over your current folder, then
+  run `nuvio\install.ps1` again. Your `nuvio\nuvio-mpv.conf` is kept; `nuvio\input.conf`
+  is replaced, so back it up first if you edited it.
 
 ## Limits
 
@@ -110,8 +111,10 @@ anyaudio does what `--audio-file` does (mpv's `audio-add` command); what it adds
 picking the source from inside the player, where the stream's address is usually hidden.
 If both files are on your disk and you want to keep the result, mkvmerge is the better
 tool: no extra bandwidth and nothing to set up the next time you watch. Once a pair plays
-well, `Ctrl+F7` copies the ready `mkvmerge` command to the clipboard: the dub, with your
-audio delay, becomes the default track of `<video name>.anyaudio.mkv`, next to the video.
+well, `Ctrl+F7` builds the ready `mkvmerge` command: the dub, with your audio delay,
+becomes the default track of `<video name>.anyaudio.mkv`, next to the video. On Windows
+(mpv 0.40 or newer) it goes to the clipboard; elsewhere it is printed to the terminal. Run
+it where `mkvmerge` is on PATH (the MKVToolNix installer for Windows does not add it).
 
 ## Privacy
 

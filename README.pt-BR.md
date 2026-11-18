@@ -23,7 +23,7 @@ em sincronia, sem baixar nem remuxar nada antes.
 | `F6` | **grab**: guarda esta fonte | com a fonte do áudio que você quer tocando |
 | `F7` | **apply**: adiciona aquele áudio aqui e troca para ele | com a fonte do vídeo que você quer tocando |
 | `F8` | **clear**: volta ao áudio da própria fonte | a qualquer momento depois do `F7` |
-| `Ctrl+F7` | **mkvmerge**: copia o comando que salva este resultado num arquivo | depois do `F7`, com as duas fontes em arquivos no seu disco |
+| `Ctrl+F7` | **mkvmerge**: copia o comando que salva este resultado num arquivo | no mpv, depois do `F7`, com as duas fontes em arquivos no seu disco |
 
 O resultado de cada tecla aparece na tela (`anyaudio: ...`), em inglês.
 
@@ -83,8 +83,9 @@ Versões novas saem como [releases](https://github.com/joaodutra88/mpv-anyaudio/
 Para ser avisado, use **Watch → Custom → Releases** no topo desta página.
 
 - mpv e Stremio: troque o `anyaudio.lua` pelo da release nova.
-- Nuvio: feche o Nuvio, copie os arquivos da release nova por cima da sua pasta atual (o
-  seu `nuvio\nuvio-mpv.conf` é mantido) e rode o `nuvio\install.ps1` de novo.
+- Nuvio: feche o Nuvio, copie os arquivos da release nova por cima da sua pasta atual e
+  rode o `nuvio\install.ps1` de novo. O seu `nuvio\nuvio-mpv.conf` é mantido; o
+  `nuvio\input.conf` é substituído, então faça uma cópia antes se você o editou.
 
 ## Limites
 
@@ -113,9 +114,11 @@ O anyaudio faz o mesmo que o `--audio-file` (o comando `audio-add` do mpv); o qu
 acrescenta é escolher a fonte de dentro do player, onde o endereço do stream normalmente
 fica escondido. Se os dois arquivos estão no seu disco e você quer guardar o resultado, o
 mkvmerge é a ferramenta melhor: sem banda extra e nada para preparar na próxima vez.
-Quando um par tocar bem, o `Ctrl+F7` copia o comando `mkvmerge` pronto para a área de
-transferência: a dublagem, com o seu atraso de áudio, vira a faixa padrão do
-`<nome do vídeo>.anyaudio.mkv`, ao lado do vídeo.
+Quando um par tocar bem, o `Ctrl+F7` monta o comando `mkvmerge` pronto: a dublagem, com o
+seu atraso de áudio, vira a faixa padrão do `<nome do vídeo>.anyaudio.mkv`, ao lado do
+vídeo. No Windows (mpv 0.40 ou mais novo) ele vai para a área de transferência; nos outros
+casos aparece no terminal. Rode onde o `mkvmerge` estiver no PATH (o instalador do
+MKVToolNix para Windows não o coloca lá).
 
 ## Privacidade
 
